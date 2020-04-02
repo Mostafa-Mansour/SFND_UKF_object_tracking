@@ -41,6 +41,12 @@ class UKF {
    */
   void UpdateRadar(MeasurementPackage meas_package);
 
+  // make the update step of UKF
+  void UpdateUKF(MeasurementPackage , Eigen::MatrixXd , int );
+
+  // wraping angles between [-pi, pi]
+  void NormAng(double * angle);
+
 
   // initially set to false, set to true in first call of ProcessMeasurement
   bool is_initialized_;
@@ -92,9 +98,24 @@ class UKF {
 
   // Augmented state dimension
   int n_aug_;
+  
+  // Number of sigma points
+  int n_sig_;
 
   // Sigma point spreading parameter
   double lambda_;
+
+  // Measurement covariance matrix for radar
+  Eigen::MatrixXd R_radar_;
+
+  // Measurement covariance matrix for Lidar
+  Eigen::MatrixXd R_lidar_;
+
+  // NIS for radar for consistency check
+    double NIS_radar_;
+
+  // NIS for laser for consistency check
+    double NIS_laser_;
 };
 
 #endif  // UKF_H
