@@ -8,6 +8,11 @@
 int main(int argc, char** argv)
 {
 
+	
+	std::cout<<"Please enter the velocity of the car (20 is a good option)"<<std::endl;
+	double egoVelocity ;
+	cin>>egoVelocity;
+	
 	pcl::visualization::PCLVisualizer::Ptr viewer(new pcl::visualization::PCLVisualizer("3D Viewer"));
 	viewer->setBackgroundColor(0, 0, 0);
 
@@ -25,7 +30,7 @@ int main(int argc, char** argv)
 	int frame_count = 0;
 	int time_us = 0;
 
-	double egoVelocity = 25;
+	
 
 	while (frame_count < (frame_per_sec*sec_interval))
 	{

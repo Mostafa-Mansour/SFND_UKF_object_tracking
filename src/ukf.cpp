@@ -7,16 +7,8 @@ using Eigen::VectorXd;
 /**
  * Initializes Unscented Kalman filter
  */
-UKF::UKF() {
-  // initialization flag
-  is_initialized_=false;
+UKF::UKF():is_initialized_(false), use_laser_(true), use_radar_(true) {
   
-  // if this is false, laser measurements will be ignored (except during init)
-  use_laser_ = true;
-
-  // if this is false, radar measurements will be ignored (except during init)
-  use_radar_ = true;
-
   // initial state vector
   x_ = VectorXd(5);
 
@@ -30,8 +22,8 @@ UKF::UKF() {
   std_yawdd_ = 1.5;
   
   /**
-   * DO NOT MODIFY measurement noise values below.
-   * These are provided by the sensor manufacturer.
+   * 
+   * measurement noises are provided by the sensor manufacturer.
    */
 
   // Laser measurement noise standard deviation position1 in m
@@ -91,7 +83,7 @@ void UKF::NormAng(double *ang) {
     while (*ang < -M_PI) *ang += 2. * M_PI;
 }
 
-void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
+void UKF::ProcessMeasurement(MeasurementPackage& meas_package) {
   if (!is_initialized_) {
   // Initial covariance matrix
     P_ << 1, 0, 0, 0, 0,
@@ -234,7 +226,7 @@ void UKF::Prediction(double delta_t) {
 
 
 
-void UKF::UpdateLidar(MeasurementPackage meas_package) {
+void UKF::UpdateLidar(MeasurementPackage& meas_package) {
   // Set measurement dimension
   int n_z = 2;
   // Create matrix for sigma points in measurement space
@@ -243,7 +235,7 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
   UpdateUKF(meas_package, Zsig, n_z);
 }
 
-void UKF::UpdateRadar(MeasurementPackage meas_package) {
+void UKF::UpdateRadar(MeasurementPackage& meas_package) {
   // Set measurement dimension, radar can measure r, phi, and r_dot
   int n_z = 3;
   // Create matrix for sigma points in measurement space
@@ -265,7 +257,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
   UpdateUKF(meas_package, Zsig, n_z);
 }
 
-void UKF::UpdateUKF(MeasurementPackage meas_package, MatrixXd Zsig, int n_z){
+void UKF::UpdateUKF(MeasurementPackage& meas_package, MatrixXd Zsig, int n_z){
   // Mean predicted measurement
   VectorXd z_pred = VectorXd(n_z);
   z_pred  = Zsig * weights_;

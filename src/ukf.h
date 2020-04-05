@@ -20,7 +20,7 @@ class UKF {
    * ProcessMeasurement
    * @param meas_package The latest measurement data of either radar or laser
    */
-  void ProcessMeasurement(MeasurementPackage meas_package);
+  void ProcessMeasurement(MeasurementPackage& meas_package);
 
   /**
    * Prediction Predicts sigma points, the state, and the state covariance
@@ -33,21 +33,28 @@ class UKF {
    * Updates the state and the state covariance matrix using a laser measurement
    * @param meas_package The measurement at k+1
    */
-  void UpdateLidar(MeasurementPackage meas_package);
+  void UpdateLidar(MeasurementPackage& meas_package);
 
   /**
    * Updates the state and the state covariance matrix using a radar measurement
    * @param meas_package The measurement at k+1
    */
-  void UpdateRadar(MeasurementPackage meas_package);
+  void UpdateRadar(MeasurementPackage& meas_package);
 
   // make the update step of UKF
-  void UpdateUKF(MeasurementPackage , Eigen::MatrixXd , int );
+  void UpdateUKF(MeasurementPackage& , Eigen::MatrixXd , int );
 
   // wraping angles between [-pi, pi]
   void NormAng(double * angle);
 
+  // state vector: [pos1 pos2 vel_abs yaw_angle yaw_rate] in SI units and rad
+  Eigen::VectorXd x_;
 
+  // state covariance matrix
+  Eigen::MatrixXd P_;
+
+
+private:
   // initially set to false, set to true in first call of ProcessMeasurement
   bool is_initialized_;
 
@@ -57,11 +64,7 @@ class UKF {
   // if this is false, radar measurements will be ignored (except for init)
   bool use_radar_;
 
-  // state vector: [pos1 pos2 vel_abs yaw_angle yaw_rate] in SI units and rad
-  Eigen::VectorXd x_;
-
-  // state covariance matrix
-  Eigen::MatrixXd P_;
+  
 
   // predicted sigma points matrix
   Eigen::MatrixXd Xsig_pred_;
