@@ -3,20 +3,6 @@
 
 <img src="media/ukf_highway_tracked.gif" width="700" height="400" />
 
-## Addressed rubric points:
-* 1- A README with instructions is included with the project
-* 2- The README indicates which project is chosen.
-* 3- The README includes information about each rubric point addressed.
-* 4- The submission must compile and run.
-* 5- The project demonstrates an understanding of C++ functions and control structures. (check ukf.cpp, you wil find a lot of functions and control structures).
-* 6- The project reads data from a file and process the data, or the program writes data to a file. (In tools.cpp, line 129, there is a function that use PCL api library to read the point cloud from a file).  
-* 7- The project accepts user input and processes the input. (in main.cpp file, the velcoity is asked at line 14 and used at line 41 ).
-* 8- The project uses Object Oriented Programming techniques (check ukf.h and ukf.cpp files).
-* 9- Classes use appropriate access specifiers for class members (in file ukf.h, line 8 and line 57).
-* 10 - Class constructors utilize member initialization lists (in ukf.cpp, line 10).
-* 11- Classes encapsulate behavior (in ukf.cpp, line 86, processMeasurement function encapsulates two update functions, one for radar measurements and one for lidar measurements).
-* 12- The project makes use of references in function declarations (in ukf.h lines 36, 42, and 45).
-
 In this project I implemented an Unscented Kalman Filter to estimate the state of multiple cars on a highway using noisy lidar and radar measurements. 
 
 The main program can be built and ran by doing the following from the project top directory.
